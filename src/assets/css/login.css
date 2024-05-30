@@ -1,0 +1,24 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.core {
+    /* background-color: blueviolet; */
+    margin: auto;
+    padding: 20px;
+    width: 300px;
+}
+
+.idInput {
+    margin: 4px;
+}
+
+.pwInput {
+    margin: 4px;
+}
+
+.loginButton {
+    margin: 4px;
+}
+

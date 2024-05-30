@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { Cookies } from "react-cookie";
+import { Button, Input, Space } from "antd";
+
+import "../assets/css/login.css"
 
 export default function Login() {
 
@@ -12,11 +15,18 @@ export default function Login() {
     const [iconPw, setIconPw] = useState(false); // 경고 아이콘 state 
     const [cautionMsg, setCautionMsg] = useState(""); // 경고 메세지
 
+    const [passwordVisible, setPasswordVisible] = React.useState(false);
+
     useEffect(() => {
         // login 상태 확인 후 접속 상태를 보여줄지 로그인 화면을 보여줄지 결정
         checkLogin();
         // if 분기
     }, [])
+
+    // onChange
+    const onChangeID = () => {
+
+    }
 
     // login status 확인
     // cookie? jwt.decode? session?
@@ -47,19 +57,26 @@ export default function Login() {
 
     // login process 수행
     const login = () => {
-        return // redirect home
+        return console.log('test login');// redirect home
 
     };
 
 
 return (
     <>
-    <div>
-        <div>logo</div>
+    <div className="core">
+        <div>logo</div><br/>
         <div>
-            <input type="text"></input><br/>
-            <input type="password" onChange={onChangePassword}></input>
-            <input type="button" onClick={login}/>
+            <Input className="idInput" placeholder="ID를 입력하세요" onChange={onChangeID}/>
+            <Input.Password
+            className="pwInput"
+            placeholder="비밀번호를 입력하세요"
+            visibilityToggle={{
+                visible: passwordVisible,
+                onVisibleChange: setPasswordVisible,
+            }}
+            />
+            <Button className="loginButton" type="primary" onClick={login}>login</Button>
         </div>             
     </div>
     </>

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import jwt from 'jsonwebtoken'; // jwt
-import { Cookies, useCookies } from 'react-cookie' // cookie
+import { Cookies } from "react-cookie";
 
 export default function Login() {
 
@@ -14,22 +13,21 @@ export default function Login() {
     const [cautionMsg, setCautionMsg] = useState(""); // 경고 메세지
 
     useEffect(() => {
+        // login 상태 확인 후 접속 상태를 보여줄지 로그인 화면을 보여줄지 결정
         checkLogin();
+        // if 분기
     }, [])
 
     // login status 확인
     // cookie? jwt.decode? session?
     const checkLogin = (password) => {
-        if (jwt.decode) {
-            
-        }
         return 
     };
 
     // 입력값에 대한 조건 확인
     // false 시 state에 의한 경고 문구 표시
     const validateLogin = () => {
-        return
+        return // true/false로 리턴을 통한 login 가능 상태 확인
         
     };
 
@@ -40,8 +38,7 @@ export default function Login() {
         if (!validateLogin(currentPassword)) {
             // password 경고문
             // 경고 아이콘
-        }
-        else {
+        } else {
             // password 경고문 삭제
             // 경고 아이콘 삭제
         }
@@ -50,7 +47,7 @@ export default function Login() {
 
     // login process 수행
     const login = () => {
-        return
+        return // redirect home
 
     };
 
@@ -59,8 +56,11 @@ return (
     <>
     <div>
         <div>logo</div>
-        <div></div>        
-        <div></div>        
+        <div>
+            <input type="text"></input><br/>
+            <input type="password" onChange={onChangePassword}></input>
+            <input type="button" onClick={login}/>
+        </div>             
     </div>
     </>
 )

@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { Cookies } from "react-cookie";
-import { Button, Input, Space } from "antd";
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Form, Input } from 'antd';
 
 import "../assets/css/login.css"
 
@@ -61,23 +62,56 @@ export default function Login() {
 
     };
 
+    const onFinish = (values) => {
+        console.log('Received values of form: ', values);
+      };
+
 
 return (
     <>
     <div className="core">
         <div>logo</div><br/>
-        <div>
-            <Input className="idInput" placeholder="ID를 입력하세요" onChange={onChangeID}/>
-            <Input.Password
-            className="pwInput"
-            placeholder="비밀번호를 입력하세요"
-            visibilityToggle={{
-                visible: passwordVisible,
-                onVisibleChange: setPasswordVisible,
+        <Form
+        name="normal_login"
+        className="login-form"
+        initialValues={{
+            remember: true,
             }}
+            onFinish={onFinish}
+            >
+        <Form.Item
+            name="username"
+            rules={[
+                {
+                    required: true,
+                    message: 'ID를 입력해주세요',
+                },
+            ]}
+            >
+            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+        </Form.Item>
+        <Form.Item
+            name="password"
+            rules={[
+                {
+                    required: true,
+                    message: '비밀번호를 입력해주세요',
+                },
+            ]}
+            >
+            <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Password"
             />
-            <Button className="loginButton" type="primary" onClick={login}>login</Button>
-        </div>             
+        </Form.Item>
+        <Form.Item>
+            <Button type="primary" htmlType="submit" className="login-form-button">
+            Log in
+            </Button>
+            또는 <a href="">회원등록하기</a>
+        </Form.Item>
+        </Form>
     </div>
     </>
 )

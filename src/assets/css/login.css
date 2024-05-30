@@ -7,18 +7,32 @@
     /* background-color: blueviolet; */
     margin: auto;
     padding: 20px;
-    width: 300px;
+    width: 350px;
+    color: coral;
 }
 
-.idInput {
-    margin: 4px;
+.login-form {
+    max-width: 300px;
 }
 
-.pwInput {
-    margin: 4px;
+.login-form-forgot {
+    float: right;
+    color: coral;
 }
 
-.loginButton {
-    margin: 4px;
+.ant-col-rtl .login-form-forgot {
+    float: left;
 }
 
+#ant-checkbox-inner {
+    accent-color: coral;
+}
+
+.login-form-button {
+    width: 100%;
+    background-color: coral;
+}
+
+.ant-form-item-control-input-content > a {
+    color: coral;
+}

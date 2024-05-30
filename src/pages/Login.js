@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import jwt from 'jsonwebtoken'; // jwt
-
+import { Cookies, useCookies } from 'react-cookie' // cookie
 
 export default function Login() {
 
@@ -18,7 +18,11 @@ export default function Login() {
     }, [])
 
     // login status 확인
+    // cookie? jwt.decode? session?
     const checkLogin = (password) => {
+        if (jwt.decode) {
+            
+        }
         return 
     };
 

@@ -1,3 +1,5 @@
+
+
 * {
     padding: 0;
     margin: 0;
@@ -8,7 +10,6 @@
     margin: auto;
     padding: 20px;
     width: 350px;
-    color: coral;
 }
 
 .login-form {
@@ -17,22 +18,15 @@
 
 .login-form-forgot {
     float: right;
-    color: coral;
 }
 
 .ant-col-rtl .login-form-forgot {
     float: left;
 }
 
-#ant-checkbox-inner {
-    accent-color: coral;
-}
-
 .login-form-button {
     width: 100%;
-    background-color: coral;
 }
 
 .ant-form-item-control-input-content > a {
-    color: coral;
 }

@@ -4,6 +4,7 @@ import { Cookies } from "react-cookie";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 
+import 'antd-button-color/dist/css/style.css';
 import "../assets/css/login.css"
 
 export default function Login() {

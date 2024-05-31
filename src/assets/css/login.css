@@ -1,15 +1,28 @@
 
+.head {
+    width: 100%;
+    height: 380px;
+}
 
-* {
-    padding: 0;
-    margin: 0;
+.contents {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
 }
 
 .core {
     /* background-color: blueviolet; */
-    margin: auto;
-    padding: 20px;
-    width: 350px;
+    width: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -25px 0 0 -175px;
+    padding: 0;
+}
+
+.logo {
+    text-align: center;
 }
 
 .login-form {
@@ -28,5 +41,11 @@
     width: 100%;
 }
 
-.ant-form-item-control-input-content > a {
+.signup {
+    color: #1677FF;
 }
+
+.signup:hover {
+    color: #0f53b2;
+}
+

@@ -3,7 +3,7 @@ import axios from "axios";
 import { Cookies } from "react-cookie";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Switch, Modal } from 'antd';
+import { Button, Form, Input, Switch, Modal } from 'antd';
 
 // hook
 import useInput from '../hooks/useInput';
@@ -14,7 +14,7 @@ import hashing from "../utils/hashing";
 //css
 import 'antd-button-color/dist/css/style.css';
 import "../assets/css/login.css"
-import { Router, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
 

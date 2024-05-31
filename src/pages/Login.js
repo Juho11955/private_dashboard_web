@@ -2,22 +2,55 @@ import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { Button, Checkbox, Form, Input, Switch, Modal } from 'antd';
 
+// hook
+import useInput from '../hooks/useInput';
+
+// util
+import hashing from "../utils/hashing";
+
+//css
 import 'antd-button-color/dist/css/style.css';
 import "../assets/css/login.css"
 
 export default function Login() {
 
-    // state 관리
-    // const URI = process.env;
-    const [id, setId] = useState(""); // id input
-    const [passsword, setPassword] = useState(""); // password input
+    const [id, onChangeId] = useInput('');
+    const [password, onChangePassword] = useInput('');
+    
+    // antd form control
+    const [form] = Form.useForm();
 
-    const [iconPw, setIconPw] = useState(false); // 경고 아이콘 state 
-    const [cautionMsg, setCautionMsg] = useState(""); // 경고 메세지
+    // 로그인 요청
+    // 버튼을 누르면 validation이 완료된 후에 실행
+    const onSubmitForm = useCallback((form) => {
 
-    const [passwordVisible, setPasswordVisible] = React.useState(false);
+        // 비밀번호 암호화
+        // salt는 이후 env 파일로 빼는 작업 진행
+        const salt = 'apple';
+        const hash = hashing(form.password, salt);
+        form.password = hash;
+
+        // react-create에서 crypto 관련 애러로 사용불가 블로그 등에서 찾은 방법들 시도해보았지만 해결불가
+        // const hash = SHA256(password, key).toString();
+        
+        axios.post('/login', { form })
+        .catch((e) => {
+            console.error(e);
+        })
+        .then((response) => {
+            if (response.status === 200) {
+            Modal.success({
+                title: '로그인이 완료되었습니다.',
+                onOk() {
+                Switch.push('/Dashboard');
+                },
+            });
+            }
+        });
+    }, []);
 
     useEffect(() => {
         // login 상태 확인 후 접속 상태를 보여줄지 로그인 화면을 보여줄지 결정
@@ -25,93 +58,94 @@ export default function Login() {
         // if 분기
     }, [])
 
-    // onChange
-    const onChangeID = () => {
-
-    }
-
     // login status 확인
     // cookie? jwt.decode? session?
     const checkLogin = (password) => {
         return 
     };
 
-    // 입력값에 대한 조건 확인
-    // false 시 state에 의한 경고 문구 표시
-    const validateLogin = () => {
-        return // true/false로 리턴을 통한 login 가능 상태 확인
-        
-    };
-
-    // password 입력 시 조건 충족 확인
-    const onChangePassword = useCallback((e) => {
-        const currentPassword = e.target.value;
-
-        if (!validateLogin(currentPassword)) {
-            // password 경고문
-            // 경고 아이콘
-        } else {
-            // password 경고문 삭제
-            // 경고 아이콘 삭제
+    // validate 
+    // id 유효성 검사
+    const validateId = useCallback((_, value) => {
+        if (!value) {
+          return Promise.reject(new Error('ID는 필수 항목입니다.'));
         }
+        if (/\s/.test(value)) {
+          return Promise.reject(new Error('ID는 공백을 포함 할 수 없습니다.'));
+        }
+    
+        let nicknameLength = 0;
+        for (let i = 0; i < value.length; i += 1) {
+          const char = value.charAt(i);
+          if (escape(char).length > 4) {
+            nicknameLength += 2;
+          } else {
+            nicknameLength += 1;
+          }
+        }
+        if (nicknameLength < 2 || nicknameLength >= 20) {
+          return Promise.reject(new Error('ID는 한글1~10자, 영문 및 숫자 2~20자까지 입력가능합니다.'));
+        }
+        const regExp = /[^a-zA-Z0-9가-힣_]/;
+        if (regExp.test(value)) {
+          return Promise.reject(new Error('ID는 한글, 영문, 숫자, _ 만 사용할 수 있습니다.'));
+        }
+        return Promise.resolve();
+    }, []);
 
-    });
-
-    // login process 수행
-    const login = () => {
-        return console.log('test login');// redirect home
-
-    };
-
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
-      };
-
+    // password 유효성 검사
+    const validatePassword = useCallback((_, value) => {
+        const regExp = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-z]{1,50})(?=.*[A-Z]{1,50}).{8,50}$/;
+        if (!value) {
+            return Promise.reject(new Error('비밀번호는 필수 항목입니다.'));
+        }
+        if (!regExp.test(value)) {
+            return Promise.reject(new Error('비밀번호는 8~50자이며 영문 소문자, 영문 대문자, 숫자, 특수문자를 모두 포함해야 합니다.'));
+        }
+        return Promise.resolve();
+    }, []);
 
 return (
     <>
     <div className="core">
         <div>logo</div><br/>
         <Form
-        name="normal_login"
-        className="login-form"
-        initialValues={{
-            remember: true,
+            className="login-form"
+            initialValues={{
+                remember: true,
             }}
-            onFinish={onFinish}
+            onFinish={onSubmitForm}
+            form={form}
+        >
+            <Form.Item
+                name="id"
+                rules={[{ validator: validateId }]}
             >
-        <Form.Item
-            name="username"
-            rules={[
-                {
-                    required: true,
-                    message: 'ID를 입력해주세요',
-                },
-            ]}
+                <Input 
+                    prefix={<UserOutlined className="site-form-item-icon" />} 
+                    placeholder="ID를 입력하세요" 
+                    onChange={onChangeId}
+                />
+            </Form.Item>
+            <Form.Item
+                name="password"
+                rules={[{ validator: validatePassword }]}
             >
-            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-        </Form.Item>
-        <Form.Item
-            name="password"
-            rules={[
-                {
-                    required: true,
-                    message: '비밀번호를 입력해주세요',
-                },
-            ]}
-            >
-            <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="password"
-            placeholder="Password"
-            />
-        </Form.Item>
-        <Form.Item>
-            <Button type="primary" htmlType="submit" className="login-form-button">
-            Log in
-            </Button>
-            또는 <a href="">회원등록하기</a>
-        </Form.Item>
+                <Input.Password
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    type="password"
+                    placeholder="비밀번호를 입력하세요"
+                    value={password}
+                    onChange={onChangePassword}
+                    iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                />
+            </Form.Item>
+            <Form.Item>
+                <Button type="primary" htmlType="submit" className="login-form-button">
+                로그인
+                </Button>
+                또는 <a href="">회원등록하기</a>
+            </Form.Item>
         </Form>
     </div>
     </>

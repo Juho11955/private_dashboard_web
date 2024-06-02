@@ -117,6 +117,14 @@ export default function Login() {
     // sign-up modal
     const modalSignup = () => {
         console.log("test");
+        
+        // test api
+        axios.get(`${process.env.REACT_APP_API_URL}/user`)
+        .catch((e) => {
+            console.error(e);
+        })
+        // test end
+
         navigate('/Dashboard');
     };
 

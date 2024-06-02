@@ -5,6 +5,9 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Form, Input, Switch, Modal } from 'antd';
 
+// URL
+// const backIp = process.env.REACT_APP_API_URL;
+
 // hook
 import useInput from '../hooks/useInput';
 
@@ -95,7 +98,7 @@ export default function Login() {
         // react-create에서 crypto 관련 애러로 사용불가 블로그 등에서 찾은 방법들 시도해보았지만 해결불가
         // const hash = SHA256(password, key).toString();
         
-        axios.post('/login', { form })
+        axios.post(`${process.env.REACT_APP_API_URL}/user`, { form })
         .catch((e) => {
             console.error(e);
         })

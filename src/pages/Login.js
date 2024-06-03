@@ -98,7 +98,7 @@ export default function Login() {
         // react-create에서 crypto 관련 애러로 사용불가 블로그 등에서 찾은 방법들 시도해보았지만 해결불가
         // const hash = SHA256(password, key).toString();
         
-        axios.post(`${process.env.REACT_APP_API_URL}/user`, { form })
+        axios.post("/members", { form })
         .catch((e) => {
             console.error(e);
         })
@@ -119,8 +119,9 @@ export default function Login() {
         console.log("test");
         
         // test api
-        axios.get(`${process.env.REACT_APP_API_URL}/members`)
+        axios.get("/members")
         .catch((e) => {
+            console.log("error");
             console.error(e);
         })
         // test end

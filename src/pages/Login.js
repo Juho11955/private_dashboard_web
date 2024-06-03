@@ -119,7 +119,7 @@ export default function Login() {
         console.log("test");
         
         // test api
-        axios.get(`${process.env.REACT_APP_API_URL}/user`)
+        axios.get(`${process.env.REACT_APP_API_URL}/members`)
         .catch((e) => {
             console.error(e);
         })

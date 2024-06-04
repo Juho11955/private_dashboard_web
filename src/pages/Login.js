@@ -120,6 +120,9 @@ export default function Login() {
         
         // test api
         axios.get("/members")
+        .then((res) => {
+            console.log(res);
+        })
         .catch((e) => {
             console.log("error");
             console.error(e);

@@ -85,9 +85,10 @@ const Dashboard = () => {
   }
     setLayout(layout)
   };
-  // useEffect(()=>{
-  //   console.log({layout})
-  // }, [layout])
+  const removeElement = (element) => {
+    let removeElement = layout.filter(x=>x.i!==element.i)
+    setLayout(removeElement)
+  }
     return(
         <>
         {/* <Sidebar
@@ -120,7 +121,12 @@ const Dashboard = () => {
           isDroppable={true}
         className="GridLayout"
         >
-          {layout.map(x=><div key={`${x.i}`}>{`${x.i} 영역`}</div>)}
+          {layout.map(x=><div key={`${x.i}`}>{`${x.i} 영역`}
+          <div className="remove" onClick={()=>{removeElement(x)}}>
+            x
+          </div>
+          </div>)}
+          
         </ResponsiveReactGridLayout>
         </>
     )

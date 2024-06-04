@@ -10,3 +10,6 @@
 .Sidebar-item{
     border:1px solid black;
 }
+.remove {
+    z-index: 99;
+}

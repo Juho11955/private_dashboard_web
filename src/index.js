@@ -5,6 +5,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
+import "./css/Common.css"
+import 'react-grid-layout/css/styles.css'
+import 'react-resizable/css/styles.css'
 // import Dashboard from './pages/Dashboard';
 
 

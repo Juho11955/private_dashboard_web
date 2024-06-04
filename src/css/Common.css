@@ -1,0 +1,12 @@
+.Sidebar-wrapper{
+    width:200px;
+    height: 1000px;
+    border: 1px solid black;
+    float: left;
+}
+.GridLayout{
+    margin-left: 200px;
+}
+.Sidebar-item{
+    border:1px solid black;
+}

@@ -13,3 +13,6 @@
 .remove {
     z-index: 99;
 }
+.aside {
+    float: left;
+}

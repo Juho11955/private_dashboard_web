@@ -5,6 +5,7 @@ import GridLayout from 'react-grid-layout'
 import Sidebar from "./Sidebar";
 import "../css/Common.css";
 import { Responsive, WidthProvider } from "react-grid-layout";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 
@@ -15,15 +16,40 @@ const Dashboard = () => {
     { i: "c", x: 3, y: 1, w: 1, h: 1 }
   ]);
   const [clickedItem,setClickedItem] = useState();
-    
-  let SideBarList = [
+  const [sideBarList , setSideBarList] = useState([
     { i: "a", x: 0, y: 0, w: 12, h: 1 ,isResizable:false},
     { i: "b", x: 0, y: 1, w: 12, h: 1  ,isResizable:false},
     { i: "c", x: 0, y: 2, w: 12, h: 1  ,isResizable:false},
     { i: "d", x: 0, y: 3, w: 12, h: 1 ,isResizable:false},
     { i: "e", x: 0, y: 4, w: 12, h: 1  ,isResizable:false},
     { i: "f", x: 0, y: 5, w: 12, h: 1  ,isResizable:false},
-    ]
+    ])  
+  
+
+    useEffect(()=>{
+      // 두 배열을 비교 후 layout에 있는 json을 sideBarList에서 빼야함
+      let newArray=sideBarList
+      sideBarList.map((x,i)=>{
+        layout.map((y,k)=>{
+          if(x.i===y.i){
+            newArray.splice(i,1)
+          } 
+        })
+      })
+      setSideBarList(newArray)
+    },[layout])
+    useEffect(()=>{
+      // 두 배열을 비교 후 layout에 있는 json을 sideBarList에서 빼야함
+      let newArray=sideBarList
+      sideBarList.map((x,i)=>{
+        layout.map((y,k)=>{
+          if(x.i===y.i){
+            newArray.splice(i,1)
+          } 
+        })
+      })
+      setSideBarList(newArray)
+    },[])
     // 컴포넌트 리스트도 따로 있어야 겠네?
     // 원본 컴포넌트 및 레이아웃 정보 
     let base_component_info = [
@@ -34,7 +60,6 @@ const Dashboard = () => {
     { i: "e", x: 4, y: 0, w: 1, h: 1 },
     { i: "f", x: 5, y: 0, w: 1, h: 1 },
     ]
-
 
   // x 값과 y값은 마우스 위치에 따라서 만들어서 넣기 ? 
   //layout 을 store에 저장 후 사용 후 마지막에 store 가 소멸할 때 DB에 넣기
@@ -92,9 +117,10 @@ const Dashboard = () => {
     return(
         <>
         {/* <Sidebar
-        SideBarList={SideBarList}
+        sideBarList={sideBarList}
         /> */}
-        {SideBarList.map((x,i)=> <div
+        <div className="aside">
+        {sideBarList.map((x,i)=> <div
           className="droppable-element"
           draggable={true}
           unselectable="on"
@@ -103,6 +129,7 @@ const Dashboard = () => {
         >
         {x.i}  
         </div>)}
+        </div>
         
         <ResponsiveReactGridLayout
         layout={layout}

@@ -6,6 +6,8 @@ import Sidebar from "./Sidebar";
 import "../css/Common.css";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import { isDisabled } from "@testing-library/user-event/dist/utils";
+import test1 from "../component/test1";
+
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 
@@ -111,8 +113,12 @@ const Dashboard = () => {
     setLayout(layout)
   };
   const removeElement = (element) => {
+    // 지울요소
     let removeElement = layout.filter(x=>x.i!==element.i)
+    // 남는 요소
+    let otherElement =  layout.filter(x=>x.i===element.i)
     setLayout(removeElement)
+    setSideBarList([...sideBarList,...otherElement])
   }
     return(
         <>

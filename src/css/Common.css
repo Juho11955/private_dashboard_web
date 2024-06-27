@@ -5,6 +5,8 @@
     float: left;
 }
 .GridLayout{
+    height: 1000px !important;
+    width: 100%;
     margin-left: 200px;
 }
 .Sidebar-item{
